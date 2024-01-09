@@ -1,0 +1,335 @@
+:root {
+  --primary-dark: #333;
+  --secondary-dark: #444;
+  --primary-light: #eee;
+  --secondary-light: #ddd;
+
+  --black: #050505;
+  --red: #ff7070;
+  --light-green: #9fff9c;
+  --light-red: #ff9c9c;
+  --border-radius: 8px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 40px;
+  --container-width: 1200px;
+  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* header */
+header {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  background-color: var(--primary-dark);
+  width: 100%;
+  height: 90px;
+}
+
+header button {
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+  border: none;
+}
+
+header i {
+  color: var(--primary-light);
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+.header-btns {
+  display: flex;
+  gap: 50px;
+}
+
+.home.active,
+.saved-bills.active {
+  border-bottom: 1px solid black;
+}
+
+header button:hover {
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+
+/* main */
+
+main {
+  margin-top: 140px;
+}
+.meal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: 1fr 1fr;
+  gap: var(--spacing-xl);
+  margin: var(--spacing-xl);
+  grid-auto-rows: 1fr;
+}
+
+.meal-card,
+.shared-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-light);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+}
+
+.remove,
+.remove-modal {
+  position: absolute;
+  border: none;
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-light);
+  transform: translate(275px, -25px);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 4px;
+}
+
+.remove:hover,
+.remove-modal:hover,
+.edit:hover {
+  background-color: var(--primary-dark);
+  color: var(--primary-light)
+}
+
+.meal-card .name,
+.shared-card .shared {
+  font-weight: bold;
+  text-align: center;
+}
+
+.item-header {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 4fr 1fr 2fr;
+  border-bottom: 1px solid black;
+}
+
+.item-header .quantity,
+.item-header .price {
+  text-align: right;
+}
+
+.item-list {
+  display: grid;
+  grid-template-rows: 19.2px;
+  grid-auto-rows: 19.2px;
+  gap: 5px;
+  border-bottom: 1px solid black;
+  height: 117px;
+  max-height: 117px;
+  overflow-y: auto;
+}
+
+
+.item-list .item {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 4fr 1fr 2fr;
+
+}
+
+.item .quantity,
+.item .price {
+  text-align: right;
+}
+
+.edit,
+.add-person-btn,
+.add-shared-btn {
+  background-color: var(--secondary-light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xs)
+}
+
+.add-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+  height: 266.89px;
+}
+
+.add-card button {
+  padding: 30px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-light);
+  font-weight: bold;
+}
+
+.add-card button:hover,
+.add-person-form button:hover,
+.add-shared-form button:hover {
+  background-color: var(--primary-dark);
+  color: var(--primary-light)
+}
+
+/* modals */
+
+.add-person-modal,
+.add-shared-modal {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 309px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-light);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+  transform: translate(-50%, -50%) scale(0);
+  
+}
+
+.add-person-modal.active,
+.add-shared-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+
+.add-person-form,
+.add-shared-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+
+}
+
+.add-person-form input#name,
+.add-shared-form p {
+  text-align: center;
+}
+
+.add-shared-form p {
+  font-weight: bold;
+}
+
+.add-item-list {
+  display: grid;
+  grid-template-rows: 19.2px;
+  grid-auto-rows: 19.2px;
+  gap: 5px;
+  height: 117px;
+  max-height: 117px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom: 1px solid black;
+}
+
+.add-item,
+.add-shared-item {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 5px;
+}
+
+.add-item #itemName,
+.add-shared-item #itemName {
+  width: 149.57px;
+  height: 19.2px;
+}
+
+.add-item #quantity,
+.add-shared-item #quantity {
+  width: 33.39px;
+  height: 19.2px;
+}
+
+.add-item #price,
+.add-shared-item #price {
+  width: 66.79px;
+  height: 19.2px;
+}
+
+.add-item-btn {
+  border: none;
+  border-radius: 4px;
+}
+.add-btn-margin {
+  margin-top: 5px;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay.active {
+  display: block;
+}
+
+
+
+
+
+
+::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+}
+::-webkit-scrollbar-track {
+  background-color: var(--secondary-light); /* Set the background color of the track */
+}
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the thumb (the draggable part) */
+  border-radius: 8px; /* Optional: Set the border radius of the thumb */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* 
+input:invalid {
+  border: 1px solid var(--red);
+} */
