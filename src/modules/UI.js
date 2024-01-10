@@ -426,6 +426,7 @@ export default class UI {
     saveBillBtn.addEventListener('click', () => {
       Storage.addBill(bill);
       UI.closeAllModals();
+      UI.loadSavedBill();
     });
 
   }
