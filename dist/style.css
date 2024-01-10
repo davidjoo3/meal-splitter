@@ -69,6 +69,7 @@ header i {
   gap: 50px;
 }
 
+
 .home.active,
 .saved-bills.active {
   border-bottom: 1px solid black;
@@ -76,6 +77,17 @@ header i {
 
 header button:hover {
   border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+.split {
+  padding: 10px 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background-color: var(--secondary-dark);
+}
+.split:hover {
+  border-bottom: 2px solid var(--primary-dark);
   padding-bottom: 10px;
 }
 
@@ -99,7 +111,6 @@ main {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
   border-radius: var(--border-radius);
@@ -109,25 +120,39 @@ main {
 }
 
 .remove,
-.remove-modal {
-  position: absolute;
+.remove-shared,
+.remove-modal,
+.calculate,
+.remove-split-modal,
+.save-bill  {
+  /* position: absolute; */
   border: none;
   padding: var(--spacing-xs);
   border-radius: var(--border-radius);
   background-color: var(--secondary-light);
-  transform: translate(275px, -25px);
+  /* transform: translate(275px, -25px); */
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 4px;
 }
 
 .remove:hover,
 .remove-modal:hover,
-.edit:hover {
+.remove-shared:hover,
+.edit:hover,
+.calculate:hover,
+.remove-split-modal:hover,
+.save-bill:hover {
   background-color: var(--primary-dark);
   color: var(--primary-light)
 }
 
+.add-item {
+  position: relative;
+}
+
+
 .meal-card .name,
-.shared-card .shared {
+.shared-card .shared,
+.bill-modal .name {
   font-weight: bold;
   text-align: center;
 }
@@ -150,8 +175,7 @@ main {
   grid-auto-rows: 19.2px;
   gap: 5px;
   border-bottom: 1px solid black;
-  height: 117px;
-  max-height: 117px;
+  height: 130px;
   overflow-y: auto;
 }
 
@@ -169,12 +193,14 @@ main {
 }
 
 .edit,
+.remove-shared,
 .add-person-btn,
 .add-shared-btn {
   background-color: var(--secondary-light);
   border: none;
   border-radius: var(--border-radius);
-  padding: var(--spacing-xs)
+  padding: var(--spacing-xs);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 4px;
 }
 
 .add-card {
@@ -188,7 +214,7 @@ main {
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: var(--shadow);
   line-height: 1.2;
-  height: 266.89px;
+  height: 307.39px;
 }
 
 .add-card button {
@@ -197,6 +223,10 @@ main {
   border-radius: var(--border-radius);
   background-color: var(--secondary-light);
   font-weight: bold;
+}
+
+.add-shared.hidden {
+  display: none;
 }
 
 .add-card button:hover,
@@ -221,11 +251,18 @@ main {
   box-shadow: var(--shadow);
   line-height: 1.2;
   transform: translate(-50%, -50%) scale(0);
-  
+  display: flex;
+  flex-direction: column;
+}
+
+.remove-modal,
+.remove-split-modal {
+  margin-bottom: 15px;
 }
 
 .add-person-modal.active,
-.add-shared-modal.active {
+.add-shared-modal.active,
+.split-modal.active {
   transform: translate(-50%, -50%) scale(1);
 }
 
@@ -250,8 +287,9 @@ main {
 
 .add-item-list {
   display: grid;
-  grid-template-rows: 19.2px;
-  grid-auto-rows: 19.2px;
+  grid-template-rows: 20px;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 20px;
   gap: 5px;
   height: 117px;
   max-height: 117px;
@@ -284,10 +322,19 @@ main {
   width: 66.79px;
   height: 19.2px;
 }
-
-.add-item-btn {
+.item-btns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.add-item-btn,
+.remove-item-btn,
+.calculate,
+.save-bill {
   border: none;
   border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 4px;
 }
 .add-btn-margin {
   margin-top: 5px;
@@ -309,6 +356,109 @@ main {
 }
 
 
+/* split modal */
+
+.split-modal {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 309px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--primary-light);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+  transform: translate(-50%, -50%) scale(0);
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.split-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+
+.radio {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset {
+  padding: 10px;
+}
+
+#restaurant-name,
+#custom {
+  text-align: center;
+}
+
+#custom {
+  align-self: center;
+  width: 200px;
+  margin-top: 5px;
+}
+
+/* bill modal */
+
+.bill-modal {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 309px;
+  height: 550px;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-light);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+  transform: translate(-50%, -50%) scale(0);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bill-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.bill-modal .remove-modal {
+  margin-bottom: 5px;
+}
+
+.bill-modal .item-list {
+  display: grid;
+    grid-template-rows: 19.2px;
+    grid-auto-rows: 19.2px;
+    gap: 5px;
+    border-bottom: 1px solid black;
+    height: 70px;
+    overflow-y: auto;
+}
+
+.person-total {
+  font-weight: 600;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+}
+.numbers p {
+  text-align: right;
+}
 
 
 

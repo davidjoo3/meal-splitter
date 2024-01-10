@@ -29,8 +29,7 @@ export default class Storage {
         );
       });
 
-      
-      if (mealList.getShared().getItems() !== null) {
+      if (mealList.getShared().getItems() !== undefined) {
             mealList.getShared().setItems(
               mealList.getShared()
               .getItems()

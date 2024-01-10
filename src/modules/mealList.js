@@ -1,7 +1,7 @@
 export default class MealList {
   constructor() {
     this.people = []
-    this.shared = null;
+    this.shared = undefined;
   }
 
   setPeople(people) {
@@ -34,7 +34,7 @@ export default class MealList {
   }
 
   deleteShared() {
-    shared = null;
+    this.shared = undefined;
   }
 
   hasPerson(personName) {
