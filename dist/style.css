@@ -81,6 +81,7 @@ header button:hover {
 }
 
 .split {
+  display: none;
   padding: 10px 30px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
@@ -91,13 +92,19 @@ header button:hover {
   padding-bottom: 10px;
 }
 
+.split.active {
+  display: block;
+}
+
+
 
 /* main */
 
 main {
   margin-top: 140px;
 }
-.meal-grid {
+.meal-grid,
+.bill-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-template-rows: 1fr 1fr;
@@ -107,7 +114,8 @@ main {
 }
 
 .meal-card,
-.shared-card {
+.shared-card,
+.bill-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -118,6 +126,7 @@ main {
   box-shadow: var(--shadow);
   line-height: 1.2;
 }
+
 
 .remove,
 .remove-shared,
@@ -149,10 +158,15 @@ main {
   position: relative;
 }
 
+.bill-card {
+  height: 620px;
+  overflow-y: auto;
+}
 
 .meal-card .name,
 .shared-card .shared,
-.bill-modal .name {
+.bill-modal .name,
+.bill-card .name {
   font-weight: bold;
   text-align: center;
 }

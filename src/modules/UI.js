@@ -9,9 +9,268 @@ export default class UI {
   
 
   static loadHome() {
+    const main = document.querySelector('main');
+    main.innerHTML = `
+
+          <div class="meal-grid">
+          
+
+          <div class="add-card">
+            <button class="add-person">ADD PERSON</button>
+            <button class="add-shared">ADD SHARED</button>
+          </div>
+
+        </div>
+
+        <div class="add-person-modal">
+          <button class="remove-modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <form class="add-person-form">
+
+            <input 
+              type="text"
+              class="input"
+              id="name"
+              placeholder="Name"
+              required
+              maxLength="21"
+            >
+
+            <div class="item-header">
+              <div class="item-name">ITEM</div>
+              <div class="quantity">QTY</div>
+              <div class="price">PRICE</div>
+            </div>
+
+            <div class="add-item-list add-person-item-list">
+              
+              <div class="add-item person">
+                <input 
+                  type="text"
+                  class="input"
+                  id="itemName"
+                  placeholder="Item"
+                  maxlength="16"
+                  required
+                >
+                <input 
+                  type="number"
+                  class="input"
+                  id="quantity"
+                  placeholder="#"
+                  onchange="(function(el){el.value=parseFloat(el.value).toFixed(0);})(this)"
+                  step="1"
+                  required
+                  min="1"
+                  max="999"
+                >
+                <input 
+                  type="number"
+                  class="input"
+                  id="price"
+                  placeholder="$"
+                  step="0.01"
+                  onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+                  required
+                  min="0.01"
+                  max="9999.99"
+                >
+              </div>
+
+              <div class="item-btns">
+                <button class="add-item-btn add-item-person">+</button>
+                <button class="remove-item-btn remove-item-person">-</button>
+              </div>
+              
+              <div class="add-btn-margin"></div>
+            </div>
+            <button type="submit" class="add-person-btn">ADD</button>
+          </form>
+        </div>
+
+        <div class="add-shared-modal">
+          <button class="remove-modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <form class="add-shared-form">
+            <p class="name">Shared</p>
+            <div class="item-header">
+              <div class="item-name">ITEM</div>
+              <div class="quantity">QTY</div>
+              <div class="price">PRICE</div>
+            </div>
+
+            <div class="add-item-list add-shared-item-list">
+              <div class="add-item shared">
+                <input 
+                  type="text"
+                  class="input"
+                  id="itemName"
+                  placeholder="Item"
+                  maxlength="16"
+                  required
+                >
+                <input 
+                  type="number"
+                  class="input"
+                  id="quantity"
+                  placeholder="#"
+                  onchange="(function(el){el.value=parseFloat(el.value).toFixed(0);})(this)"
+                  step="1"
+                  required
+                >
+                <input 
+                  type="number"
+                  class="input"
+                  id="price"
+                  placeholder="$"
+                  step="0.01"
+                  onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+                  required
+                >
+              </div>
+              
+
+              <div class="item-btns">
+                <button class="add-item-btn add-item-shared">+</button>
+                <button class="remove-item-btn remove-item-shared">-</button>
+              </div>
+              <div class="add-btn-margin"></div>
+            </div>
+
+
+            <button type="submit" class="add-shared-btn">ADD</button>
+          </form>
+        </div>
+
+        <div class="split-modal">
+          <button class="remove-modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <form class="split-form">
+            <input 
+              type="text" 
+              class="input"
+              id="restaurant-name"
+              placeholder="Enter restaurant"
+              maxlength="18"
+              required
+            >
+            <fieldset>
+              <legend>Tip Amount</legend>
+              <div class="radio">
+                <div class="twenty">
+                  <input type="radio" class="radio-btn" id="twenty" name="radio" value="0.2" checked/>
+                  <label for="twenty">20%</label><br />
+                </div>
+                <div class="eighteen">
+                  <input type="radio" class="radio-btn" id="eighteen" name="radio" value="0.18" />
+                  <label for="eighteen">18%</label><br />
+                </div> 
+                <div class="fifteen">
+                  <input type="radio" class="radio-btn" id="fifteen" name="radio" value="0.15" 
+                          onChange=""/>
+                  <label for="fifteen">15%</label>
+                </div>            
+              </div>
+              
+              <input 
+                  type="number"
+                  class="input"
+                  id="custom"
+                  placeholder="Custom Tip"
+                  step="0.01"
+                  onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+                  min="0.00"
+                >
+            </fieldset>
+            <button type="button" class="calculate">CALCULATE</button>
+          </form>
+        </div>
+        <div class="bill-modal"></div>
+        <div class="overlay"></div>
+    `;
     UI.initButtons();
     UI.displayMealList();
+  }
+
+  static loadSavedBill() {
+    const main = document.querySelector('main');
+    main.innerHTML = '';
+
+    const splitBtn = document.querySelector('.split');
+    splitBtn.classList.remove('active');
     
+    UI.initSavedBillButtons();
+    UI.displayBillList();
+  }
+
+  static displayBillList() {
+    const billList = Storage.getBillList();
+    const main = document.querySelector('main');
+    const billGrid = document.createElement('div');
+    billGrid.classList.add('bill-grid');
+
+    for (const bill of billList.bills) {
+      billGrid.appendChild(UI.makeBillCard(bill));
+    }
+    main.appendChild(billGrid);
+    UI.initSavedBillButtons();
+  }
+
+  static makeBillCard(bill) {
+    const billCard = document.createElement('div');
+    billCard.classList.add('bill-card');
+    billCard.innerHTML = `
+      <button class="remove-modal remove-bill-card">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <p class="name">${bill.restaurant}</p>
+      <p class="date">Date: ${bill.date}</p>
+    `;
+    
+    const mealTotalList = UI.makeBill(bill);
+    for (let mealTotal of mealTotalList) {
+      billCard.appendChild(mealTotal);
+    }
+    billCard.innerHTML += `
+      <div class="summary">
+        <div class="titles">
+          <p>SUBTOTAL: </p>
+          <p>TAX: </p>
+          <p>TIP: </p>
+          <p>TOTAL: </p>
+        </div>
+        <div class="numbers">
+          <p class="subtotal">$ ${bill.subtotal}</p>
+          <p class="tax">$ ${bill.tax}</p>
+          <p class="tip">$ ${bill.tip}</p>
+          <p class="total">$ ${bill.total}</p>
+        </div>
+      </div>
+    `;
+    return billCard;
+  }
+
+  static initSavedBillButtons() {
+    const homeBtn = document.querySelector('.home');
+    homeBtn.addEventListener('click', UI.loadHome);
+
+    const removeBillBtns = document.querySelectorAll('.remove-bill-card');
+    removeBillBtns.forEach((button) => {
+      let date = button.nextSibling.nextSibling.nextSibling.nextSibling;
+      const dateTime = date.textContent.slice(6);
+      button.addEventListener('click', () => {
+        UI.deleteBillCard(dateTime);
+
+      });
+    })
+  }
+
+  static deleteBillCard(billDate) {
+    Storage.deleteBill(billDate);
+    UI.loadSavedBill();
   }
 
   static initHomeButtons() {
@@ -20,7 +279,12 @@ export default class UI {
     const removePersonCardBtns = document.querySelectorAll('.remove');
     const removeSharedCardBtn = document.querySelector('.remove-shared');
     const splitBtn = document.querySelector('.split');
+    const savedBillBtn = document.querySelector('.saved-bills');
 
+    splitBtn.classList.add('active');
+
+    savedBillBtn.addEventListener('click', UI.loadSavedBill);
+    
     addPersonBtn.addEventListener('click', UI.openAddPersonModal);
     addSharedBtn.addEventListener('click', UI.openAddSharedModal);
     removePersonCardBtns.forEach((button) => {
@@ -119,7 +383,8 @@ export default class UI {
 
     
     const bill = UI.billify(restaurant, tipAmount);
-    console.log(bill);
+    
+    // console.log(bill);
     billModal.innerHTML = `
       <button class="remove-modal">
       <i class="fa-solid fa-xmark"></i>
@@ -151,8 +416,18 @@ export default class UI {
     `;
     billModal.classList.add('active');
     overlay.classList.add('active');
+    UI.initSaveBillButton(bill);
     UI.initButtons();
    
+  }
+
+  static initSaveBillButton(bill) {
+    const saveBillBtn = document.querySelector('.save-bill');
+    saveBillBtn.addEventListener('click', () => {
+      Storage.addBill(bill);
+      UI.closeAllModals();
+    });
+
   }
 
   static makeBill(bill) {
@@ -181,7 +456,7 @@ export default class UI {
       mealTotalList.push(mealTotal);
     })
 
-    if (bill.sharedWithTotal !== undefined) {
+    if (bill.sharedWithTotal !== null && bill.sharedWithTotal !== undefined)  {
       
       const mealTotal = document.createElement('div');
       mealTotal.classList.add('meal-total');
@@ -207,6 +482,8 @@ export default class UI {
     return mealTotalList;
   }
 
+  static deleteBill() {}
+
   static closeBillModal() {
     const billModal = document.querySelector('.bill-modal');
     const overlay = document.querySelector('.overlay');
@@ -216,9 +493,6 @@ export default class UI {
   }
 
   static billify(restaurant, tipAmount) {
-    
-    console.log(tipAmount);
-    
     const mealList = Storage.getMealList();
     const newBill = new Bill(restaurant);
     newBill.date = newBill.getDate();
@@ -235,6 +509,8 @@ export default class UI {
                                                                 newBill.subtotal,
                                                                 newBill.tax,
                                                                 newBill.tip);
+    
+    console.log(Storage.getBillList());                                                              
     return newBill;
   }
 
@@ -398,7 +674,6 @@ export default class UI {
       return;
     }
     let items = Array.from(document.querySelectorAll('.add-item.person'));
-    console.log(items);
     let convertedItems = [];
     items.forEach((item) => {
       convertedItems.push(UI.getItem(item));
@@ -524,8 +799,6 @@ export default class UI {
     const addItemList = e.target.parentNode.parentNode;
     const itemBtnsDiv = e.target.parentNode;
     const addItemDiv = document.createElement('div');
-    console.log(addItemList);
-    
     addItemDiv.classList.add('add-item');
 
     if (addItemList.classList.contains('add-shared-item-list')) {
@@ -582,10 +855,6 @@ export default class UI {
     } else {
       addItemList.removeChild(itemBtnsDiv.previousSibling);
     }
-
-    console.log(addItemList.childElementCount)
-    
-    
     
     UI.initButtons();
   }
