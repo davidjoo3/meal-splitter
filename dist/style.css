@@ -86,7 +86,7 @@ header button:hover {
   padding: 10px 30px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  background-color: var(--secondary-dark);
+  background-color: red;
 }
 .split:hover {
   border-bottom: 2px solid var(--primary-dark);
