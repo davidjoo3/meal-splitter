@@ -64,6 +64,15 @@ header i {
   margin-right: 6px;
 }
 
+.home {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+
 .header-btns {
   display: flex;
   gap: 50px;
@@ -86,7 +95,7 @@ header button:hover {
   padding: 10px 30px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  background-color: red;
+  background-color: var(--secondary-dark);
 }
 .split:hover {
   border-bottom: 2px solid var(--primary-dark);
