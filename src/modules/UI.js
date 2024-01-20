@@ -4,17 +4,14 @@ import Shared from './shared';
 import Bill from './bill';
 import Storage from './storage';
 
-
 export default class UI {
   
-
   static loadHome() {
     const main = document.querySelector('main');
     main.innerHTML = `
 
           <div class="meal-grid">
           
-
           <div class="add-card">
             <button class="add-person">ADD PERSON</button>
             <button class="add-shared">ADD SHARED</button>
@@ -338,9 +335,6 @@ export default class UI {
 
     const calculateBtn = document.querySelector('.calculate');
     
-
-    
-
     addPersonBtn.addEventListener('click', UI.openAddPersonModal);
     addPersonFrom.addEventListener('submit', UI.addPerson);
     addSharedBtn.addEventListener('click', UI.openAddSharedModal);
@@ -367,6 +361,7 @@ export default class UI {
       alert("Enter restaurant name!");
       return;
     }
+
     const tipBtns = document.querySelectorAll('.radio-btn');
     const customAmt = document.getElementById('custom').value;
     let tipAmount = 0.0;
@@ -380,11 +375,8 @@ export default class UI {
     }
     UI.closeAllModals();
     
-
-    
     const bill = UI.billify(restaurant, tipAmount);
     
-    // console.log(bill);
     billModal.innerHTML = `
       <button class="remove-modal">
       <i class="fa-solid fa-xmark"></i>
@@ -418,7 +410,6 @@ export default class UI {
     overlay.classList.add('active');
     UI.initSaveBillButton(bill);
     UI.initButtons();
-   
   }
 
   static initSaveBillButton(bill) {
@@ -428,7 +419,6 @@ export default class UI {
       UI.closeAllModals();
       UI.loadSavedBill();
     });
-
   }
 
   static makeBill(bill) {
@@ -465,7 +455,6 @@ export default class UI {
       const personTotal = document.createElement('p');
       personTotal.classList.add('person-total');
       personTotal.textContent = "Shared";
-      // + ': $ ' + bill.sharedWithTotal[1] + " Each"
 
       const itemHeader = document.createElement('div');
       itemHeader.classList.add('item-header');
@@ -482,8 +471,6 @@ export default class UI {
     }
     return mealTotalList;
   }
-
-  static deleteBill() {}
 
   static closeBillModal() {
     const billModal = document.querySelector('.bill-modal');
@@ -585,15 +572,8 @@ export default class UI {
         </div>
     `;
     }
-    
     mealCard.appendChild(UI.makeItemList(person.items));
     
-    // const editBtn = document.createElement('button');
-    // editBtn.classList.add('edit');
-    // editBtn.textContent = 'EDIT';
-
-    // mealCard.appendChild(editBtn);
-
     return mealCard;
   }
 
@@ -764,7 +744,6 @@ export default class UI {
   }
 
   static closeAddPersonModal() {
-    
     const addPersonModal = document.querySelector('.add-person-modal');
     const addPersonForm = document.querySelector('.add-person-form');
     const overlay = document.querySelector('.overlay');

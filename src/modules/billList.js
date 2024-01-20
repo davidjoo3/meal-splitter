@@ -1,4 +1,5 @@
 export default class BillList {
+  
   constructor() {
     this.bills = [];
   }

@@ -14,7 +14,7 @@ export default class Bill {
   getDate() {
     var today = new Date();
     var date = (today.getMonth() + 1) + '/' + today.getDate() + '/'+today.getFullYear();
-    
+
     var minute = today.getMinutes();
     minute = minute < 10 ? '0' + minute : minute;
 
@@ -38,7 +38,6 @@ export default class Bill {
         subtotal += parseFloat(item.price * parseInt(item.quantity));
       })
     })
-    
     
     return subtotal.toFixed(2);
   }
@@ -69,6 +68,7 @@ export default class Bill {
                           + ((itemSubtotal / parseFloat(subtotal)) * parseFloat(tip));
       return [shared.items, sharedTotal.toFixed(2)];
     }
+
     return undefined;
   }
 
@@ -89,8 +89,10 @@ export default class Bill {
                        + ((itemSubtotal / parseFloat(subtotal)) * parseFloat(tax)) 
                         + ((itemSubtotal / parseFloat(subtotal)) * parseFloat(tip)) 
                         + sharedTotalForEach;
+
       peopleWithTotalArray.push([person, personTotal.toFixed(2)]);
     })
+
     return peopleWithTotalArray;
   }
 }

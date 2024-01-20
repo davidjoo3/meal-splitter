@@ -1,4 +1,5 @@
 export default class MealList {
+
   constructor() {
     this.people = []
     this.shared = undefined;
@@ -26,7 +27,6 @@ export default class MealList {
     } else {
       this.people.push(newPerson);
     }
-    
   }
 
   deletePerson(personName) {

@@ -108,5 +108,4 @@ export default class Storage {
     billList.deleteBill(billDate);
     Storage.saveBillList(billList);
   }
-
 }

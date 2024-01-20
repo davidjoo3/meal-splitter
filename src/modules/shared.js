@@ -28,6 +28,4 @@ export default class Shared {
   deleteItem(itemName) {
     this.items = this.items.filter((item) => item.name !== itemName);
   }
-
-
 }

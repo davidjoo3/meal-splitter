@@ -1,4 +1,5 @@
 export default class Person {
+
   constructor(name, items) {
     this.name = name;
     this.items = items;
@@ -27,5 +28,4 @@ export default class Person {
   deleteItem(itemName) {
     this.items = this.items.filter((item) => item.name !== itemName);
   }
-
 }
