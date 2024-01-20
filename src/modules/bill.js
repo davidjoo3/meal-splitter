@@ -1,6 +1,5 @@
 export default class Bill {
 
-
   constructor(restaurant) {
     this.restaurant = restaurant;
     this.date = null;
@@ -15,11 +14,14 @@ export default class Bill {
   getDate() {
     var today = new Date();
     var date = (today.getMonth() + 1) + '/' + today.getDate() + '/'+today.getFullYear();
+    
     var minute = today.getMinutes();
-    if (minute < 10) {
-      minute = '0' + minute;
-    }
-    var time = today.getHours() + ":" + minute + ":" + today.getSeconds();
+    minute = minute < 10 ? '0' + minute : minute;
+
+    var second = today.getSeconds();
+    second = second < 10 ? '0' + second : second;
+
+    var time = today.getHours() + ":" + minute + ":" + second;
     return date + ' ' + time;
   }
 
