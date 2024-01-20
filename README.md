@@ -2,7 +2,7 @@
 
 [Live Demo](https://davidjoo3.github.io/meal-splitter/) :point_left:
 
-This app is for those who struggle to split their meals with others when they share some food while having their own food!
+This app is for those who struggle to split their meals with others when they share food while having their own food!
 
 # Directions
 - click ADD PERSON to add people you shared meals with and items that they ordered for themselves
