@@ -487,6 +487,7 @@ fieldset {
 
 
 
+
 ::-webkit-scrollbar {
   width: 5px; /* Set the width of the scrollbar */
 }
@@ -503,7 +504,20 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* 
-input:invalid {
-  border: 1px solid var(--red);
-} */
+
+@media (max-width: 550px) {
+  .home > h1 {
+    display: none;
+  }
+  .home > i {
+    font-size: 36px;
+  }
+  .header-btns {
+    margin-left: 0;
+    text-align: left;
+  }
+  .split {
+    margin-left: 40px;
+  }
+
+}
